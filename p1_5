@@ -1,3 +1,9 @@
+Create an INVOICE database and having following tables.
+     Customer(id, name, address, city, ph_no)
+     Product(pid,  pname, price (default 0))
+     Invoice_master(inv_id, cust_id(FK), inv_date)
+     Invoice_item(inv_id (FK),  pid(FK), quantity)
+
 mysql> create database Invoice;
 Query OK, 1 row affected (0.00 sec)
 
