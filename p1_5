@@ -1,8 +1,8 @@
-Create an INVOICE database and having following tables.
-     Customer(id, name, address, city, ph_no)
-     Product(pid,  pname, price (default 0))
-     Invoice_master(inv_id, cust_id(FK), inv_date)
-     Invoice_item(inv_id (FK),  pid(FK), quantity)
+--> Create an INVOICE database and having following tables.
+      Customer(id, name, address, city, ph_no)
+      Product(pid,  pname, price (default 0))
+      Invoice_master(inv_id, cust_id(FK), inv_date)
+     I nvoice_item(inv_id (FK),  pid(FK), quantity)
 
 mysql> create database Invoice;
 Query OK, 1 row affected (0.00 sec)
@@ -60,3 +60,73 @@ mysql> desc Invoice_item;
 | quantity | int  | NO   |     | NULL    |       |
 +----------+------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
+
+
+-->  DDL-ALTER & DROP
+
+1. Add a column ‘SSN’ at the first position in the table EMPLOYEE
+
+mysql> alter table EMPLOYEE add SSN int first;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+2. Change the data type of the column ‘DOB’  in year the table EMPLOYEE    
+
+mysql> alter table EMPLOYEE modify column dob year;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+3. Delete the column ‘emp_id’ the table EMPLOYEE. 
+
+mysql> alter table EMPLOYEE drop column emp_id;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+4. Add  the constraint unique for columns ‘SSN, ‘adhar_no’ the table EMPLOYEE
+
+mysql> alter table EMPLOYEE add constraint uq_employee unique (SSN,adhar_no);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+5. Delete the NULL constraint of ‘age’ in the STUDENT table.
+
+mysql> alter table STUDENT modify column age int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+6. Change the table name EMPLOYEE as PERSON
+
+mysql> rename table EMPLOYEE to PERSON;
+Query OK, 0 rows affected (0.02 sec)
+
+ 7. Delete the table STUDENT1.
+mysql> drop table STUDENT1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DESC PERSON;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  | MUL | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(30) | YES  |     | NULL    |       |
+| dob      | year        | YES  |     | NULL    |       |
+| adhar_no | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESC STUDENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | NO   |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| gender  | char(10)    | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
