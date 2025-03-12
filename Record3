@@ -1,0 +1,158 @@
+a) TCL COMMANDS
+
+1.    Commit
+2.    Rollback
+3.    Savepoint
+
+mysql> set autocommit=off;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into command value(106,'Ajay');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from command;
++------+----------+
+| id   | name     |
++------+----------+
+|  105 | Nihala   |
+|  104 | Hadeela  |
+|  103 | Anjana   |
+|  102 | Arunjith |
+|  101 | Sanin    |
+|  106 | Ajay     |
++------+----------+
+6 rows in set (0.00 sec)
+
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from command;
++------+----------+
+| id   | name     |
++------+----------+
+|  105 | Nihala   |
+|  104 | Hadeela  |
+|  103 | Anjana   |
+|  102 | Arunjith |
+|  101 | Sanin    |
++------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into command value(106,'Ajay');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into command value(107,'Amil');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into command value(108,'Yaseen');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from command;
++------+----------+
+| id   | name     |
++------+----------+
+|  105 | Nihala   |
+|  104 | Hadeela  |
+|  103 | Anjana   |
+|  102 | Arunjith |
+|  101 | Sanin    |
+|  106 | Ajay     |
+|  107 | Amil     |
+|  108 | Yaseen   |
++------+----------+
+8 rows in set (0.00 sec)
+
+mysql> rollback to s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from command;
++------+----------+
+| id   | name     |
++------+----------+
+|  105 | Nihala   |
+|  104 | Hadeela  |
+|  103 | Anjana   |
+|  102 | Arunjith |
+|  101 | Sanin    |
+|  106 | Ajay     |
+|  107 | Amil     |
++------+----------+
+7 rows in set (0.00 sec)
+
+mysql> rollback to s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from command;
++------+----------+
+| id   | name     |
++------+----------+
+|  105 | Nihala   |
+|  104 | Hadeela  |
+|  103 | Anjana   |
+|  102 | Arunjith |
+|  101 | Sanin    |
+|  106 | Ajay     |
++------+----------+
+6 rows in set (0.00 sec)
+
+***********************************************************************
+b) DCL COMMAND
+ Create two users user1, user2
+
+mysql> use INVOICE;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+
+mysql> create user 'Nihala'@'localhost' identified by 'Nihala@123';
+Query OK, 0 rows affected (0.01 sec)
+
+
+create user 'Jebin'@'localhost' identified by 'Jebin@123';
+Query OK, 0 rows affected (0.01 sec)
+
+
+1.              GRANT
+
+Give insert and select privilege to user 1 on customer table in the invoice database.
+
+
+
+mysql> grant all on Customer to 'Nihala'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for 'Nihala'@'localhost';
++----------------------------------------------------------------------+
+| Grants for Nihala@localhost                                          |
++----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `Nihala`@`localhost`                           |
+| GRANT ALL PRIVILEGES ON `INVOICE`.`Customer` TO `Nihala`@`localhost` |
++----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+**************************************************************************************************************
+Give update and delete privilege to user 2 on all tables in the invoice database.
+
+
+mysql> grant all on *.* to 'Jebin'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show grants for 'Jebin'@'localhost';
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for Jebin@localhost                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `Jebin`@`localhost`                                                                                                                                                                                                                                                                                                                                                                                     |
+| GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `Jebin`@`localhost` |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
