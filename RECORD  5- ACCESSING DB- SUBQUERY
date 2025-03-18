@@ -1,0 +1,72 @@
+ACCESSING DATABASE:  (SUBQUERY)
+
+1.    List the product name and price of each invoice item.
+
+mysql> SELECT pname,price FROM Product WHERE pid IN(SELECT pid FROM Invoice_item);
++--------+--------+
+| pname  | price  |
++--------+--------+
+| Pen    | 120.00 |
+| Pencil |  75.00 |
+| Soap   |  60.00 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+
+2.    List the product names, only include their purchased quantity more than 3.
+
+mysql> SELECT pname FROM Product WHERE pid IN(SELECT pid FROM Invoice_item WHERE quantity > 3);
++-------+
+| pname |
++-------+
+| Pen   |
+| Soap  |
++-------+
+2 rows in set (0.00 sec)
+
+
+3.    Find the product that has no sale.
+
+mysql> SELECT * FROM Product WHERE pid NOT IN(SELECT pid FROM Invoice_item);
++-----+----------+-------+
+| pid | pname    | price |
++-----+----------+-------+
+|   4 | Notebook | 80.00 |
+|   5 | Eraser   | 50.00 |
++-----+----------+-------+
+2 rows in set (0.00 sec)
+
+
+4.    List the customer names who purchased the items ‘pen’ and ‘pencil’.
+
+mysql> SELECT name FROM Customer WHERE id IN(SELECT cust_id FROM Invoice_master WHERE inv_id IN(SELECT inv_id FROM Invoice_item WHERE pid IN(SELECT pid FROM Product WHERE pname="pen" OR pname="pencil")));
++-------+
+| name  |
++-------+
+| Rahul |
+| Aisha |
++-------+
+2 rows in set (0.00 sec)
+
+5.    Display the purchased product details of the customer ’Aisha’.
+
+mysql> SELECT * FROM Product WHERE pid IN(SELECT pid FROM Invoice_item WHERE inv_id IN(SELECT inv_id FROM Invoice_master WHERE cust_id IN(SELECT cust_id FROM Customer WHERE name="Aisha")));
++-----+--------+--------+
+| pid | pname  | price  |
++-----+--------+--------+
+|   3 | Soap   |  60.00 |
+|   2 | Pencil |  75.00 |
+|   1 | Pen    | 120.00 |
++-----+--------+--------+
+3 rows in set (0.00 sec)
+
+6.    List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
+
+mysql> SELECT DISTINCT name FROM Customer WHERE id IN(SELECT cust_id FROM Invoice_master WHERE inv_id IN(SELECT inv_id FROM Invoice_item GROUP BY inv_id HAVING
+COUNT(*) >= 2));
++-------+
+| name  |
++-------+
+| Rahul |
++-------+
+1 row in set (0.00 sec)
