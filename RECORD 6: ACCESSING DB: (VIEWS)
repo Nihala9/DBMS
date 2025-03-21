@@ -28,3 +28,5 @@ mysql> select * from no_sale;
 |   5 | Eraser   | 50.00 |
 +-----+----------+-------+
 2 rows in set (0.01 sec)
+
+//VERIFIED
