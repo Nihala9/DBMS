@@ -100,3 +100,5 @@ Invoice_item.pid = Product.pid AND quantity=2);
 | Pencil |
 +--------+
 1 row in set (0.00 sec)
+
+//VERIFIED
