@@ -39,4 +39,4 @@ mysql> SELECT pname,price_range(price) FROM Product//
 | Eraser   | Medium             |
 +----------+--------------------+
 5 rows in set (0.00 sec)
-
+//VERIFIED
