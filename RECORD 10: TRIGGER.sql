@@ -59,3 +59,4 @@ mysql> SELECT * FROM Product //
 |   4 | Eraser   |  10.00 |
 +-----+----------+--------+
 4 rows in set (0.00 sec)
+//VERIFIED
