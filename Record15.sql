@@ -9,7 +9,7 @@ switched to db INVOICE
 Successfully added user: { "user" : "CUSTOMER1", "roles" : [ { "role" : "read", "db" : "INVOICE" } ] }
 
 /* 2. Write a MongoDB query (command-line utility) to create the backup for the INVOICE database.*/
-(base) ksb@ksb-07:~/Documents/yaseen/mongo$ mongodump --db INVOICE --out ./invoice_backup_clean
+(base) ksb@ksb-07:~/Documents/nihala/mongo$ mongodump --db INVOICE --out ./invoice_backup_clean
 2025-04-23T10:15:10.100+0530	writing INVOICE.CUSTOMER to invoice_backup_clean/INVOICE/CUSTOMER.bson
 2025-04-23T10:15:10.125+0530	done dumping INVOICE.CUSTOMER (3 documents)
 2025-04-23T10:15:10.128+0530	writing INVOICE.PRODUCT to invoice_backup_clean/INVOICE/PRODUCT.bson
@@ -23,7 +23,7 @@ switched to db INVOICE
 > db.dropDatabase()
 { "dropped" : "INVOICE", "ok" : 1 }
 
-(base) ksb@ksb-07:~/Documents/yaseen/mongo$ mongorestore --db INVOICE --drop ./invoice_backup_clean/INVOICE
+(base) ksb@ksb-07:~/Documents/nihala/mongo$ mongorestore --db INVOICE --drop ./invoice_backup_clean/INVOICE
 2025-04-23T10:16:05.500+0530	The --db and --collection flags are deprecated for this use-case; please use --nsInclude instead, i.e. with --nsInclude=${DATABASE}.${COLLECTION}
 2025-04-23T10:16:05.501+0530	building a list of collections to restore from invoice_backup_clean/INVOICE dir
 2025-04-23T10:16:05.502+0530	don't know what to do with file "invoice_backup_clean/INVOICE/prelude.json", skipping...
